@@ -29,4 +29,9 @@ If you insert a record in primary set, if you connect to secondary set, it will 
 must set:
 ```
 rs.slaveOk(true)
+//Or rs.slaveOk()
+```
+Even enabled slaveOk, secondary set can not add records. Only read operations are available.
+```
+db.shutdownServer()
 ```
