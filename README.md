@@ -58,3 +58,51 @@ shard a collection
 ```
 sh.shardCollection("testDB.person",{name:"hashed"},false}
 ```
+
+- cp7
+deploy mongodb on EC2
+Ubuntu 14.04:
+```
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee/etc/apt/sources.list.d/mongodb-org-3.2.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+sudo service mongod start
+```
+Start:
+```
+sudo mkdir logs data
+sudo mongod --dbpath data --logpath log/mongo.log --smallfiles --oplogSize 50 -fork
+mongo
+```
+
+deploy on docker:
+```
+wget -qO- https://get.docker.com/ |sh
+sudo service docker start         //wait 10 secs
+sudo docker info   //must use sudo
+sudo docker info
+sudo docker pull mongo
+sudo docker images | grep mongo
+sudo docker run -d --name mongoserver1 mongo
+sudo docker inspect mongoserver1 |grep IPAddress  //get ip
+```
+connect:
+```
+mongo <ip>
+```
+craete a container
+```
+mkdir -p /data/db1
+sudo docker run -d --name server2 -v /data/db1:/data/db mongo
+```
+create another container
+```
+mkdir -p /data/db3
+sudo docker run -d --name server3 -v /data/db3:/data -p 9999:27017 mongo
+```
+connect:
+```
+mongo localhost:9999
+```
+
