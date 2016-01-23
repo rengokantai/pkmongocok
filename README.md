@@ -58,6 +58,48 @@ shard a collection
 ```
 sh.shardCollection("testDB.person",{name:"hashed"},false}
 ```
+- cp4
+get current executing operations
+```
+db.currentOp().inprog
+```
+profiling(default is 0)
+```
+db.getProfilingLevel()
+```
+set(level=1,slow operations only,only record slower than 50ms)
+```
+db.getProfilingLevel(1,50)
+```
+create capped collection:
+```
+db.createCollection("system.profile",{capped:1,size:1048576})
+```
+
+create user
+```
+use test
+db.createUser({user:'test',pwd:'test',customData:{desc:'yourdata'},roles:['readWrite']})
+```
+create admin
+```
+use admin
+db.createUser({user:'admin',pwd:'admin',customData:{desc:'yourdata'},roles:['readWrite','dbAdmin','clusterAdmin']})
+```
+Detailed step:
+1. create user
+2. restart mongod, using ```--auth``` option, or add ```auth = true``` in mongod.conf
+3. restart mongo
+4. log in
+```
+db.auth('user','pass')
+```
+and logout
+```
+db.logout()
+```
+
+
 
 
 - cp5
