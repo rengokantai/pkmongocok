@@ -59,6 +59,16 @@ shard a collection
 sh.shardCollection("testDB.person",{name:"hashed"},false}
 ```
 
+
+- cp5
+automic operation
+```
+db.ec2Test.findAndModify({query:{_id:1},update:{$set:{name:"Ekk"}},fields:{_id:0,name:1},new:false})
+```
+possible params:
+upsert,new(if set to true, return modified result, although already modified)
+
+
 - cp7
 deploy mongodb on EC2
 Ubuntu 14.04:
