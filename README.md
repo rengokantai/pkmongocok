@@ -35,3 +35,26 @@ Even enabled slaveOk, secondary set can not add records. Only read operations ar
 ```
 db.shutdownServer()
 ```
+
+create sharded environment
+```
+mongod --shardsvr --dbpath mongoshrdata1 --port 27000 --logpath logs/1.log --smallfiles --oplogSize 128 (-fork)
+mongod --shardsvr --dbpath mongoshrdata1 --port 27001 --logpath logs/2.log --smallfiles --oplogSize 128 (-fork)
+mongod --configsvr --dbpath mongoshrcfg --port 25000 --logpath logs/cfg.log (-fork)
+mongos --configdb localhost:25000 --logpath logs/mongos.log (-fork)
+```
+Then run
+```
+mongo
+sh.addShard("localhost:27000")
+sh.addShard("localhost:27001")
+```
+connect to a shard
+```
+use testDB
+sh.enableSharding("testDB")
+```
+shard a collection
+```
+sh.shardCollection("testDB.person",{name:"hashed"},false}
+```
