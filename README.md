@@ -98,6 +98,10 @@ and logout
 ```
 db.logout()
 ```
+direct login
+```
+mongo -u admin -p admin admin
+```
 
 
 
